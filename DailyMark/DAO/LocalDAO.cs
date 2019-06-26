@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using Microsoft.Data.Sqlite;
 using System.IO;
 using DailyMark.Models;
+using System.Threading.Tasks;
 
 namespace DailyMark.DAO
 {
@@ -48,6 +49,20 @@ namespace DailyMark.DAO
             File.WriteAllText(filePath, JsonConvert.SerializeObject(settings));
         }
 
+        public static void DeleteDatabase()
+        {
+            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + Path.DirectorySeparatorChar + dbname)) {
+                try
+                {
+                    File.Delete(AppDomain.CurrentDomain.BaseDirectory + Path.DirectorySeparatorChar + dbname);
+                }
+                catch (IOException e){
+                    Console.WriteLine(e.Message);
+                    Task.Delay(5000).Wait();
+                    DeleteDatabase();
+                }
+            }
+        }
         public static bool CreateDatabaseIfNeeded()
         {
 
@@ -105,6 +120,29 @@ namespace DailyMark.DAO
             }
 
             return true;
+        }
+
+        public static bool ValidateDatabase() {
+           
+                SqliteConnection sqliteConnection = new SqliteConnection("Data Source=" + dbname + ";");
+                SqliteCommand sqliteCommand = new SqliteCommand("pragma integrity_check;", sqliteConnection);
+                string result = String.Empty;
+            try
+            {
+                sqliteConnection.Open();
+                SqliteDataReader reader = sqliteCommand.ExecuteReader();
+                while (reader.Read())
+                {
+                    result = (string)reader["integrity_check"];
+                }
+                sqliteConnection.Close();
+
+                return result == "ok";
+            }
+            catch {
+                sqliteConnection.Close();
+                return false;
+            }
         }
 
         public static List<int> GetNewApplicationStatusCodes()

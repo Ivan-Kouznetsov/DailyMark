@@ -1,0 +1,10 @@
+﻿th, td {
+    text-align: left;
+    min-width: 120px;
+    padding: 3px;
+}
+
+body {
+    position: relative;
+    left: 20px;
+}

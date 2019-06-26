@@ -18,6 +18,7 @@ namespace DailyMark
 
     class Program
     {
+        const string dateFormat = "MMM dd, yyyy";
         const string queriesFilename = "SearchQueries.txt";
 
 
@@ -36,16 +37,11 @@ namespace DailyMark
 
         static string RunReport(Dictionary<string, string> queries, Settings settings, DateTime startDate) {
             string result = string.Empty;
-
-            WriteTimeStampedLine("Creating today's report");
-            WriteTimeStampedLine("Report Start Date: " + startDate.ToString("MMM dd, yyyy"));
-
-
+            
             List<SearchResult> searchResults = new List<SearchResult>();
 
             foreach (string k in queries.Keys)
-            {
-                WriteTimeStampedLine("Current Query: " + k);
+            {               
                 searchResults.Add(LocalDAO.Search(k, queries[k], startDate));
             }
 
@@ -54,6 +50,7 @@ namespace DailyMark
                     result = ReportBuilder.SaveReport(settings, searchResults);
             }catch (Exception ex){
                     Console.WriteLine("There was an error saving the report. Error details: " + ex.Message);
+                    Console.ReadLine();
             }
            
             settings.LastSuccessfulReportDate = DateTime.Now.Date;
@@ -103,6 +100,11 @@ namespace DailyMark
             return input;
         }
 
+        static void PressAnyKey() {
+            Console.WriteLine("Press any key to exit...");
+            Console.ReadKey();
+        }
+
         static DateTime PromptPastDate(string prompt)
         {
             bool validInput = false;
@@ -127,6 +129,17 @@ namespace DailyMark
             return input;
         }
 
+        static DateTime PromptPastDate(string prompt, DateTime earliestDate) {
+            DateTime dt = PromptPastDate(prompt);
+            if (dt < earliestDate)
+            {
+                Console.WriteLine("Date can't be ealier than " + earliestDate.ToString(dateFormat));
+                return PromptPastDate(prompt, earliestDate);
+            }
+
+            //else
+            return dt;
+        }
 
         //as per https://github.com/dotnet/corefx/issues/10361
         public static void OpenBrowser(string url)
@@ -148,9 +161,19 @@ namespace DailyMark
 
         static void Main(string[] args)
         {
+
+            DateTime? searchDate = null;
+
             bool downloadOnly = false;
             if (args.Length > 0) {
                 if (args[0] == "-downloadonly") downloadOnly = true;
+                if ((args[0]) == "-version") {
+                    System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+                    FileVersionInfo fileVersion = FileVersionInfo.GetVersionInfo(assembly.Location);
+                    Console.WriteLine(fileVersion.FileVersion);
+
+                    return;
+                }
             } 
 
             Console.Write(licenseStatement);  
@@ -170,13 +193,22 @@ namespace DailyMark
                 if (LocalDAO.CreateDatabaseIfNeeded())
                 {
 
+                    if (!LocalDAO.ValidateDatabase()) {
+                        Console.WriteLine("Local trademark application database is corrupted");
+                        Console.WriteLine("Deleting and re-creating database");
+                        LocalDAO.DeleteDatabase();
+                        LocalDAO.CreateDatabaseIfNeeded();
+                        settings.EarliestFilingDate = DateTime.MinValue;
+                    } 
+
                     DateTime latestDate = settings.LastDownloadDate;
 
-                    if (settings.EarliestFilingDate == DateTime.MinValue)
+                    if (settings.EarliestFilingDate == DateTime.MinValue || settings.LastSuccessfulReportDate == DateTime.MinValue)
                     {
                         //first run
-
-                        settings.EarliestFilingDate = PromptPastDate("DailyMark automatically downloads USPTO TM data from the last date it was run until the present, this is the first run, so you need to specify the search start date (ex: Jan 1 2019):");
+                        searchDate = PromptPastDate("Search Start Date (ex: Jan 1 2019):");
+                        settings.EarliestFilingDate = (DateTime)searchDate;
+                        settings.LastSuccessfulReportDate = settings.EarliestFilingDate;
                         LocalDAO.SaveSettings(settings);
                         latestDate = settings.EarliestFilingDate;
                     }
@@ -205,36 +237,27 @@ namespace DailyMark
                     {
                         Console.WriteLine();
                         //run report
-                        string reportName  = string.Empty;
+                        
+                       
+                        Console.WriteLine("Earliest Filings Downloaded: " + settings.EarliestFilingDate.ToString(dateFormat));
+                        Console.WriteLine("Latest Filings Downloaded: " + settings.LastDownloadDate.ToString(dateFormat));
+                        Console.WriteLine("Last Report Date: " + settings.LastSuccessfulReportDate.ToString(dateFormat));
+                        Console.WriteLine();
 
-                        if (settings.LastSuccessfulReportDate.Date < DateTime.Now.AddDays(-1).Date)
-                        {
-                            reportName = RunReport(queries, settings, settings.LastSuccessfulReportDate);
-                            Console.WriteLine("Report Saved: " + reportName);                           
-                        }
-                        else
-                        {
-                            Console.WriteLine("The last report was run today");
-                            if (PromptYesNo("Run another report for against all available data?"))
-                            {
-                                reportName = RunReport(queries, settings, LocalDAO.GetEarliestDate());
-                                Console.WriteLine("Report Saved: " + reportName);                                
-                            }
-                        }
-
-                        if (reportName != string.Empty) {
-                            OpenBrowser(settings.ReportsDirectory + Path.DirectorySeparatorChar + reportName);
-                            return;
-                        }
+                        if (searchDate == null) searchDate = PromptPastDate("Search Start Date:", settings.EarliestFilingDate);
+                        string reportName = RunReport(queries, settings, (DateTime)searchDate);                                            
+                        OpenBrowser(settings.ReportsDirectory + Path.DirectorySeparatorChar + reportName);
                     }
                 }
                 else
                 {
                     Console.WriteLine("One or more necessary files are missing or corrupted. Please re-install.");
+                    PressAnyKey();
                 }
             }
             else {
                 Console.WriteLine("ERROR: " + queriesFilename + " " + errorMessage);
+                PressAnyKey();
             }
 
          

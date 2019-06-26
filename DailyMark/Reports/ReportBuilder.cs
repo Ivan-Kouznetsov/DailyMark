@@ -40,9 +40,9 @@ namespace DailyMark.Reports
         {
             StringBuilder stringBuilder = new StringBuilder();
 
-            string title = "Daily Mark Report for " + searchResults[0].From.ToString("MMM dd yyyy") + " - " + searchResults[0].To.ToString("MMM dd yyyy");
+            string title = "DailyMark Report for " + searchResults[0].From.ToString("MMM dd yyyy") + " - " + searchResults[0].To.ToString("MMM dd yyyy");
 
-            stringBuilder.AppendFormat("<!doctype html><html lang=en><head><meta charset=utf-8><title>{0}</title></head><body><h1>{0}</h1>", title);
+            stringBuilder.AppendFormat(@"<!doctype html><html lang=en><head><meta charset=utf-8><title>{0}</title><link href=""style.css"" rel=""stylesheet"" type=""text/css"" media=""all""></head><body><h1>{0}</h1>", title);
 
             foreach (SearchResult s in searchResults) {
                 
