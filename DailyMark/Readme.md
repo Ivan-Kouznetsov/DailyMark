@@ -12,39 +12,39 @@ The entire process is automated, all you need to do is:
 2. Run the application
 3. Read the reports that will be placed in the Reports directory
 
-####Search Queries
+#### Search Queries
 All of your search queries go into a text file called SearchQueries.txt in the following format:
 
 Query Name=Search Pattern
 
-Query Name is any text that helps you remember what the query means.
-Search Pattern is a string of text in which you can use 2 kinds of wildcard characters: _ means any single character, % means 0 or more characters.
-Case does not matter for the Search Pattern.
+Query Name is any text that helps you remember what the query means.\
+Search Pattern is a string of text in which you can use 2 kinds of wildcard characters: _ means any single character, % means 0 or more characters.\
+Case does not matter for the Search Pattern.\
 You can add comments to the file by using # at the start of the line
 
-Examples:
-Imagine you own registrations for WIDGET, FUN IN THE SUN, and TRY IT AND YOU WILL NOT FORGET IT you can use the following search queries:
-
-#starts with FUN IN THE
-StartsWithFun=fun in the%
-#ends with WILL NOT FORGET IT
-EndsWithForgetIt=%WILL NOT FORGET IT
-#contains WIDGET
+Examples:\
+Imagine you own registrations for WIDGET, FUN IN THE SUN, and TRY IT AND YOU WILL NOT FORGET IT you can use the following search queries:\
+\
+#starts with FUN IN THE\
+StartsWithFun=fun in the%\
+#ends with WILL NOT FORGET IT\
+EndsWithForgetIt=%WILL NOT FORGET IT\
+#contains WIDGET\
 widget=%widget%
 
 ### Running DailyMark
-In the Release directory find the directory for your operating system, double click on DialyMark.exe or DialyMark.
-The same directory will also contain SearchQueries.txt where you should place the search queries as discussed above.
+In the Release directory find the directory for your operating system, double click on DialyMark.exe or DialyMark.\
+The same directory will also contain SearchQueries.txt where you should place the search queries as discussed above.\
 
 
 
-###Questions?
+### Questions?
 
 Questions?
 
 Email me at: ivankuz@hotmail.com
 
-###License
+### License
 
 DailyMark trademark application monitoring software
 Copyright (C) 2019  Ivan Kouznetsov
