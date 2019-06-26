@@ -1,0 +1,807 @@
+﻿[
+  {
+    "Id": 0,
+    "Indicator": "Indifferent",
+    "Description": "UNKNOWN"
+  },
+  {
+    "Id": 400,
+    "Indicator": "Dead/Cancelled",
+    "Description": "IR CANCELLED; APPLICATION PENDING TRANSFORMATION"
+  },
+  {
+    "Id": 401,
+    "Indicator": "Dead/Cancelled",
+    "Description": "IR CANCELLED - NO TRANSFORMATION FILED"
+  },
+  {
+    "Id": 402,
+    "Indicator": "Dead/Abandoned",
+    "Description": "IR CANCELLED; US APPLICATION ABANDONED"
+  },
+  {
+    "Id": 403,
+    "Indicator": "Dead/Cancelled",
+    "Description": "IR CANCELLED; REGISTRATION PENDING TRANSFORMATION"
+  },
+  {
+    "Id": 404,
+    "Indicator": "Dead/Cancelled",
+    "Description": "IR CANCELLED; US REGISTRATION CANCELLED"
+  },
+  {
+    "Id": 405,
+    "Indicator": "Dead/Cancelled",
+    "Description": "IR CANCELED; APPLICATION TRANSFRMED"
+  },
+  {
+    "Id": 406,
+    "Indicator": "Dead/Cancelled",
+    "Description": "IR CANCELLED; REGISTRATION TRANSFORMED"
+  },
+  {
+    "Id": 410,
+    "Indicator": "Live/Pending",
+    "Description": "IR RESTRICTED; US APP. ABANDONED, PENDING TRANSFORMATION"
+  },
+  {
+    "Id": 411,
+    "Indicator": "Dead/Abandoned",
+    "Description": "IR RESTRICTED; US APP. ABANDONED; NO TRANSFORMATION FILED"
+  },
+  {
+    "Id": 412,
+    "Indicator": "Dead/Abandoned",
+    "Description": "IR RESTRICTED; US APPLICATION ABANDONED"
+  },
+  {
+    "Id": 413,
+    "Indicator": "Live/Pending",
+    "Description": "IR RESTRICTED; US REG. CANCELLED PEND TRANSFORMATION"
+  },
+  {
+    "Id": 414,
+    "Indicator": "Dead/Cancelled",
+    "Description": "IR RESTRICTED; US REG. CANCELLED; NO TRANSFORMATION FILED"
+  },
+  {
+    "Id": 415,
+    "Indicator": "Dead/Cancelled",
+    "Description": "IR RESTRICTED; US REGISTRATION CANCELLED"
+  },
+  {
+    "Id": 600,
+    "Indicator": "Dead/Abandoned",
+    "Description": "ABANDONED - INCOMPLETE RESPONSE"
+  },
+  {
+    "Id": 601,
+    "Indicator": "Dead/Abandoned",
+    "Description": "ABANDONED - EXPRESS"
+  },
+  {
+    "Id": 602,
+    "Indicator": "Dead/Abandoned",
+    "Description": "ABANDONED-FAILURE TO RESPOND OR LATE RESPONSE"
+  },
+  {
+    "Id": 603,
+    "Indicator": "Dead/Abandoned",
+    "Description": "ABANDONED - AFTER EX PARTE APPEAL"
+  },
+  {
+    "Id": 604,
+    "Indicator": "Dead/Abandoned",
+    "Description": "ABANDONED - AFTER INTER-PARTES DECISION"
+  },
+  {
+    "Id": 605,
+    "Indicator": "Dead/Abandoned",
+    "Description": "ABANDONED – EXPRESS AFTER PUB"
+  },
+  {
+    "Id": 606,
+    "Indicator": "Dead/Abandoned",
+    "Description": "ABANDONED - NO STATEMENT OF USE FILED"
+  },
+  {
+    "Id": 607,
+    "Indicator": "Dead/Abandoned",
+    "Description": "ABANDONED - DEFECTIVE STATEMENT OF USE"
+  },
+  {
+    "Id": 608,
+    "Indicator": "Dead/Abandoned",
+    "Description": "ABANDONED - AFTER PETITION DECISION"
+  },
+  {
+    "Id": 609,
+    "Indicator": "Dead/Abandoned",
+    "Description": "ABANDONED - DEFECTIVE DIVIDED APPLICATION"
+  },
+  {
+    "Id": 612,
+    "Indicator": "Dead/Abandoned",
+    "Description": "PETITION TO REVIVE-RECEIVED"
+  },
+  {
+    "Id": 614,
+    "Indicator": "Dead/Abandoned",
+    "Description": "ABANDONED PETITION TO REVIVE-DENIED"
+  },
+  {
+    "Id": 616,
+    "Indicator": "Live/Pending",
+    "Description": "REVIVED - AWAITING FURTHER ACTION"
+  },
+  {
+    "Id": 618,
+    "Indicator": "Dead/Abandoned",
+    "Description": "ABANDONED FILE - BACKFILE"
+  },
+  {
+    "Id": 620,
+    "Indicator": "Live/Pending",
+    "Description": "BACKFILE APPLICATION ADDED TO DATA BASE - STATUS NOT RECORDED"
+  },
+  {
+    "Id": 622,
+    "Indicator": "Indifferent",
+    "Description": "MISASSIGNED SERIAL NUMBER"
+  },
+  {
+    "Id": 624,
+    "Indicator": "Live/Registered",
+    "Description": "REGISTERED - BACKFILE"
+  },
+  {
+    "Id": 625,
+    "Indicator": "Live/Registered",
+    "Description": "REGISTRATION ADDED TO THE DATA BASE-STATUS UNCLEAR"
+  },
+  {
+    "Id": 626,
+    "Indicator": "Dead/Cancelled",
+    "Description": "REGISTERED - BACKFILE CANCELLED OR EXPIRED"
+  },
+  {
+    "Id": 630,
+    "Indicator": "Live/Pending",
+    "Description": "NEW APPLICATION - RECORD INITIALIZED NOT ASSIGNED TO EXAMINER"
+  },
+  {
+    "Id": 631,
+    "Indicator": "Live/Pending",
+    "Description": "NEW APPLICATION - DIVIDED - INITIAL PROCESSING"
+  },
+  {
+    "Id": 632,
+    "Indicator": "Dead",
+    "Description": "INFORMAL APPLICATION"
+  },
+  {
+    "Id": 638,
+    "Indicator": "Live/Pending",
+    "Description": "NEW APPLICATION - ASSIGNED TO EXAMINER"
+  },
+  {
+    "Id": 640,
+    "Indicator": "Live/Pending",
+    "Description": "NON-FINAL ACTION COUNTED - NOT MAILED"
+  },
+  {
+    "Id": 641,
+    "Indicator": "Live/Pending",
+    "Description": "NON-FINAL ACTION - MAILED"
+  },
+  {
+    "Id": 642,
+    "Indicator": "Live/Pending",
+    "Description": "INVENTORIED AS REJECTED"
+  },
+  {
+    "Id": 643,
+    "Indicator": "Live/Pending",
+    "Description": "PREVIOUS ACTION/ALLOWANCE COUNT WITHDRAWN"
+  },
+  {
+    "Id": 644,
+    "Indicator": "Live/Pending",
+    "Description": "FINAL REFUSAL COUNTED - NOT MAILED"
+  },
+  {
+    "Id": 645,
+    "Indicator": "Live/Pending",
+    "Description": "FINAL REFUSAL - MAILED"
+  },
+  {
+    "Id": 646,
+    "Indicator": "Live/Pending",
+    "Description": "EXAMINERS AMENDMENT COUNTED - NOT MAILED"
+  },
+  {
+    "Id": 647,
+    "Indicator": "Live/Pending",
+    "Description": "EXAMINERS AMENDMENT - MAILED"
+  },
+  {
+    "Id": 648,
+    "Indicator": "Live/Pending",
+    "Description": "ACTION CONTINUING FINAL COUNTED - NOT MAILED"
+  },
+  {
+    "Id": 649,
+    "Indicator": "Live/Pending",
+    "Description": "ACTION CONTINUING FINAL - MAILED"
+  },
+  {
+    "Id": 650,
+    "Indicator": "Live/Pending",
+    "Description": "SUSPENSION INQUIRY COUNTED - NOT MAILED"
+  },
+  {
+    "Id": 651,
+    "Indicator": "Live/Pending",
+    "Description": "SUSPENSION INQUIRY - MAILED"
+  },
+  {
+    "Id": 652,
+    "Indicator": "Live/Pending",
+    "Description": "SUSPENSION LETTER COUNTED - NOT MAILED"
+  },
+  {
+    "Id": 653,
+    "Indicator": "Live/Pending",
+    "Description": "SUSPENSION LETTER - MAILED"
+  },
+  {
+    "Id": 654,
+    "Indicator": "Live/Pending",
+    "Description": "REPORT COMPLETED SUSPENSION CHECK - CASE STILL SUSPENDED"
+  },
+  {
+    "Id": 655,
+    "Indicator": "Live/Pending",
+    "Description": "EXAMINER'S AMENDMENT/PRIORITY ACTION COUNTED NOT MAILED"
+  },
+  {
+    "Id": 656,
+    "Indicator": "Live/Pending",
+    "Description": "EXAMINER'S AMENDMENT/PRIORITY ACTION MAILED"
+  },
+  {
+    "Id": 657,
+    "Indicator": "Live/Pending",
+    "Description": "PRIORITY ACTION COUNTED NOT MAILED"
+  },
+  {
+    "Id": 658,
+    "Indicator": "Live/Pending",
+    "Description": "PRIORITY ACTION MAILED"
+  },
+  {
+    "Id": 659,
+    "Indicator": "Live/Pending",
+    "Description": "SUBSEQUENT FINAL REFUSAL COUNTED NOT MAILED"
+  },
+  {
+    "Id": 660,
+    "Indicator": "Live/Pending",
+    "Description": "SUBSEQUENT FINAL MAILED"
+  },
+  {
+    "Id": 661,
+    "Indicator": "Live/Pending",
+    "Description": "RESPONSE AFTER NON-FINAL ACTION - ENTERED"
+  },
+  {
+    "Id": 663,
+    "Indicator": "Live/Pending",
+    "Description": "RESPONSE AFTER FINAL REJECTION - ENTERED"
+  },
+  {
+    "Id": 664,
+    "Indicator": "Live/Pending",
+    "Description": "INVENTORIED AS AMENDED"
+  },
+  {
+    "Id": 665,
+    "Indicator": "Live/Pending",
+    "Description": "NOTICE OF UNRESPONSIVE AMENDMENT - COUNTED"
+  },
+  {
+    "Id": 666,
+    "Indicator": "Live/Pending",
+    "Description": "NOTICE OF UNRESPONSIVE AMENDMENT - MAILED"
+  },
+  {
+    "Id": 667,
+    "Indicator": "Live/Pending",
+    "Description": "REFUSAL WITHDRAWL LETTER - COUNTED"
+  },
+  {
+    "Id": 668,
+    "Indicator": "Live/Pending",
+    "Description": "REFUSAL WITHDRAWL LETTER - MAILED"
+  },
+  {
+    "Id": 672,
+    "Indicator": "Live/Pending",
+    "Description": "REINSTATED - AWAITING FURTHER ACTION"
+  },
+  {
+    "Id": 680,
+    "Indicator": "Live/Pending",
+    "Description": "APPROVED FOR PUBLICATION"
+  },
+  {
+    "Id": 681,
+    "Indicator": "Live/Pending",
+    "Description": "PUBLICATION/ISSUE REVIEW COMPLETE"
+  },
+  {
+    "Id": 682,
+    "Indicator": "Live/Pending",
+    "Description": "ADDITIONAL REVIEW COMPLETED – RETURNED TO PUB CYCLE"
+  },
+  {
+    "Id": 686,
+    "Indicator": "Live/Pending",
+    "Description": "PUBLISHED FOR OPPOSITION"
+  },
+  {
+    "Id": 688,
+    "Indicator": "Live/Pending",
+    "Description": "NOTICE OF ALLOWANCE - ISSUED"
+  },
+  {
+    "Id": 689,
+    "Indicator": "Live/Pending",
+    "Description": "NOTICE OF ALLOWANCE - WITHDRAWN"
+  },
+  {
+    "Id": 690,
+    "Indicator": "Live/Pending",
+    "Description": "NOTICE OF ALLOWANCE - CANCELLED"
+  },
+  {
+    "Id": 692,
+    "Indicator": "Live/Pending",
+    "Description": "WITHDRAWN BEFORE PUBLICATION"
+  },
+  {
+    "Id": 693,
+    "Indicator": "Live/Pending",
+    "Description": "WITHDRAWN FROM ISSUE-JURISDICTION RESTORED"
+  },
+  {
+    "Id": 694,
+    "Indicator": "Live/Pending",
+    "Description": "WITHDRAWN BEFORE ISSUE"
+  },
+  {
+    "Id": 700,
+    "Indicator": "Live/Registered",
+    "Description": "REGISTERED"
+  },
+  {
+    "Id": 701,
+    "Indicator": "Live/Registered",
+    "Description": "SECTION 8-ACCEPTED"
+  },
+  {
+    "Id": 702,
+    "Indicator": "Live/Registered",
+    "Description": "SECTION 8 & 15-ACCEPTED AND ACKNOWLEDGED"
+  },
+  {
+    "Id": 703,
+    "Indicator": "Live/Registered",
+    "Description": "SECTION 15-ACKNOWLEDGED"
+  },
+  {
+    "Id": 704,
+    "Indicator": "Live/Registered",
+    "Description": "PARTIAL SECTION 8 ACCEPTED"
+  },
+  {
+    "Id": 705,
+    "Indicator": "Live/Registered",
+    "Description": "PARTIAL SECTION 8 & 15 ACCEPTED AND ACKNOWLEDGED"
+  },
+  {
+    "Id": 706,
+    "Indicator": "Live/Registered",
+    "Description": "SECTION 71 ACCEPTED"
+  },
+  {
+    "Id": 707,
+    "Indicator": "Live/Registered",
+    "Description": "PARTIAL SECTION 71 ACCEPTED"
+  },
+  {
+    "Id": 708,
+    "Indicator": "Live/Registered",
+    "Description": "PARTIAL SECTION 71 & 15 ACCEPTED AND ACKNOWLEDGED"
+  },
+  {
+    "Id": 709,
+    "Indicator": "Dead/Cancelled",
+    "Description": "CANCELLED – SECTION 71"
+  },
+  {
+    "Id": 710,
+    "Indicator": "Dead/Cancelled",
+    "Description": "CANCELLED - SECTION 8"
+  },
+  {
+    "Id": 711,
+    "Indicator": "Dead/Cancelled",
+    "Description": "CANCELLED - SECTION 7"
+  },
+  {
+    "Id": 712,
+    "Indicator": "Dead/Cancelled",
+    "Description": "CANCELLED BY COURT ORDER (SECTION 37)"
+  },
+  {
+    "Id": 713,
+    "Indicator": "Dead/Cancelled",
+    "Description": "CANCELLED - SECTION 18"
+  },
+  {
+    "Id": 714,
+    "Indicator": "Dead/Cancelled",
+    "Description": "CANCELLED - SECTION 24"
+  },
+  {
+    "Id": 715,
+    "Indicator": "Indifferent/Cancelled",
+    "Description": "CANCELLED - RESTORED TO PENDENCY"
+  },
+  {
+    "Id": 717,
+    "Indicator": "Live",
+    "Description": "REGISTERED - AWAITING DIVISIONAL FEE"
+  },
+  {
+    "Id": 718,
+    "Indicator": "Live/Pending",
+    "Description": "REQUEST FOR FIRST EXTENSION - FILED"
+  },
+  {
+    "Id": 719,
+    "Indicator": "Live/Pending",
+    "Description": "REQUEST FOR SECOND EXTENSION - FILED"
+  },
+  {
+    "Id": 720,
+    "Indicator": "Live/Pending",
+    "Description": "REQUEST FOR THIRD EXTENSION - FILED"
+  },
+  {
+    "Id": 721,
+    "Indicator": "Live/Pending",
+    "Description": "REQUEST FOR FOURTH EXTENSION - FILED"
+  },
+  {
+    "Id": 722,
+    "Indicator": "Live/Pending",
+    "Description": "REQUEST FOR FIFTH EXTENSION - FILED"
+  },
+  {
+    "Id": 724,
+    "Indicator": "Live/Pending",
+    "Description": "EXTENSION REQUEST REFUSAL - COUNTED"
+  },
+  {
+    "Id": 725,
+    "Indicator": "Live/Pending",
+    "Description": "EXTENSION REQUEST REFUSAL - MAILED"
+  },
+  {
+    "Id": 730,
+    "Indicator": "Live/Pending",
+    "Description": "FIRST EXTENSION - GRANTED"
+  },
+  {
+    "Id": 731,
+    "Indicator": "Live/Pending",
+    "Description": "SECOND EXTENSION - GRANTED"
+  },
+  {
+    "Id": 732,
+    "Indicator": "Live/Pending",
+    "Description": "THIRD EXTENSION - GRANTED"
+  },
+  {
+    "Id": 733,
+    "Indicator": "Live/Pending",
+    "Description": "FOURTH EXTENSION - GRANTED"
+  },
+  {
+    "Id": 734,
+    "Indicator": "Live/Pending",
+    "Description": "FIFTH EXTENSION - GRANTED"
+  },
+  {
+    "Id": 739,
+    "Indicator": "Live/Registered",
+    "Description": "Section 71 & 15 – ACCEPTED AND ACKNOWLEDGED"
+  },
+  {
+    "Id": 740,
+    "Indicator": "Live/Pending",
+    "Description": "POST REGISTRATION PAPER FILED - ASSIGNED TO PARA-LEGAL"
+  },
+  {
+    "Id": 744,
+    "Indicator": "Live/Pending",
+    "Description": "STATEMENT OF USE - FILED"
+  },
+  {
+    "Id": 745,
+    "Indicator": "Live/Pending",
+    "Description": "STATEMENT OF USE - INFORMAL-LETTER MAILED"
+  },
+  {
+    "Id": 746,
+    "Indicator": "Live/Pending",
+    "Description": "STATEMENT OF USE - INFORMAL-RESPONSE ENTERED"
+  },
+  {
+    "Id": 748,
+    "Indicator": "Live/Pending",
+    "Description": "STATEMENT OF USE - TO EXAMINER"
+  },
+  {
+    "Id": 752,
+    "Indicator": "Live/Pending",
+    "Description": "SU - EXAMINER STATEMENT COUNTED - NOT MAILED"
+  },
+  {
+    "Id": 753,
+    "Indicator": "Live/Pending",
+    "Description": "SU - EXAMINER STATEMENT - MAILED"
+  },
+  {
+    "Id": 756,
+    "Indicator": "Live/Pending",
+    "Description": "EXAMINER STATEMENT COUNTED - NOT MAILED"
+  },
+  {
+    "Id": 757,
+    "Indicator": "Live/Pending",
+    "Description": "EXAMINER STATEMENT - MAILED"
+  },
+  {
+    "Id": 760,
+    "Indicator": "Live/Pending",
+    "Description": "EX PARTE APPEAL PENDING"
+  },
+  {
+    "Id": 762,
+    "Indicator": "Live/Pending",
+    "Description": "EX PARTE APPEAL TERMINATED"
+  },
+  {
+    "Id": 763,
+    "Indicator": "Live/Pending",
+    "Description": "EX PARTE APPEAL-REFUSAL AFFIRMED"
+  },
+  {
+    "Id": 764,
+    "Indicator": "Live/Pending",
+    "Description": "EX PARTE APPEAL DISMISSED AS MOOT"
+  },
+  {
+    "Id": 765,
+    "Indicator": "Live/Pending",
+    "Description": "CONCURRENT USE PROCEEDING TERMINATED-GRANTED"
+  },
+  {
+    "Id": 766,
+    "Indicator": "Live/Pending",
+    "Description": "CONCURRENT USE PROCEEDING TERMINATED-DENIED"
+  },
+  {
+    "Id": 771,
+    "Indicator": "Live/Pending",
+    "Description": "CONCURRENT USE PROCEEDING PENDING"
+  },
+  {
+    "Id": 772,
+    "Indicator": "Live/Pending",
+    "Description": "INTERFERENCE PROCEEDING PENDING"
+  },
+  {
+    "Id": 773,
+    "Indicator": "Live/Pending",
+    "Description": "EXTENSION OF TIME TO OPPOSE PROCESS - TERMINATED"
+  },
+  {
+    "Id": 774,
+    "Indicator": "Live/Pending",
+    "Description": "OPPOSITION PENDING"
+  },
+  {
+    "Id": 775,
+    "Indicator": "Live/Pending",
+    "Description": "OPPOSITION DISMISSED"
+  },
+  {
+    "Id": 777,
+    "Indicator": "Live/Pending",
+    "Description": "OPPOSITION TERMINATED-SEE TTAB RECORDS"
+  },
+  {
+    "Id": 778,
+    "Indicator": "Live/Registered",
+    "Description": "CANCELLATION DISMISSED"
+  },
+  {
+    "Id": 779,
+    "Indicator": "Live/Pending",
+    "Description": "OPPOSITION SUSTAINED"
+  },
+  {
+    "Id": 780,
+    "Indicator": "Live/Registered",
+    "Description": "CANCELLATION TERMINATED - SEE TTAB RECORDS"
+  },
+  {
+    "Id": 790,
+    "Indicator": "Live/Registered",
+    "Description": "CANCELLATION PENDING"
+  },
+  {
+    "Id": 794,
+    "Indicator": "Live/Pending",
+    "Description": "JURISDICTION RESTORED TO EXAMINING ATTORNEY"
+  },
+  {
+    "Id": 800,
+    "Indicator": "Live/Registered",
+    "Description": "REGISTERED AND RENEWED"
+  },
+  {
+    "Id": 801,
+    "Indicator": "Live/Pending",
+    "Description": "OPPOSITION PAPERS FILED"
+  },
+  {
+    "Id": 802,
+    "Indicator": "Live/Pending",
+    "Description": "REQUEST FOR EXTENSION OF TIME TO FILE OPPOSITION"
+  },
+  {
+    "Id": 803,
+    "Indicator": "Live/Pending",
+    "Description": "AMENDMENT AFTER PUBLICATION"
+  },
+  {
+    "Id": 804,
+    "Indicator": "Live/Pending",
+    "Description": "APPEAL RECEIVED AT TTAB"
+  },
+  {
+    "Id": 806,
+    "Indicator": "Live/Pending",
+    "Description": "SU - NON-FINAL ACTION COUNTED - NOT MAILED"
+  },
+  {
+    "Id": 807,
+    "Indicator": "Live/Pending",
+    "Description": "SU - NON-FINAL ACTION - MAILED"
+  },
+  {
+    "Id": 808,
+    "Indicator": "Live/Pending",
+    "Description": "SU - FINAL REFUSAL COUNTED - NOT MAILED"
+  },
+  {
+    "Id": 809,
+    "Indicator": "Live/Pending",
+    "Description": "SU - FINAL REFUSAL - MAILED"
+  },
+  {
+    "Id": 810,
+    "Indicator": "Live/Pending",
+    "Description": "SU - EXAMINER'S AMENDMENT COUNTED - NOT MAILED"
+  },
+  {
+    "Id": 811,
+    "Indicator": "Live/Pending",
+    "Description": "SU - EXAMINER'S AMENDMENT - MAILED"
+  },
+  {
+    "Id": 812,
+    "Indicator": "Live/Pending",
+    "Description": "SU - ACTION CONTINUING FINAL COUNTED - NOT MAILED"
+  },
+  {
+    "Id": 813,
+    "Indicator": "Live/Pending",
+    "Description": "SU - ACTION CONTINUING FINAL - MAILED"
+  },
+  {
+    "Id": 814,
+    "Indicator": "Live/Pending",
+    "Description": "SU - RESPONSE AFTER NON-FINAL ACTION - ENTERED"
+  },
+  {
+    "Id": 815,
+    "Indicator": "Live/Pending",
+    "Description": "SU - RESPONSE AFTER FINAL REJECTION - ENTERED"
+  },
+  {
+    "Id": 816,
+    "Indicator": "Live/Pending",
+    "Description": "SU - NOTICE OF UNRESPONSIVE AMENDMENT - COUNTED"
+  },
+  {
+    "Id": 817,
+    "Indicator": "Live/Pending",
+    "Description": "SU - NOTICE OF UNRESPONSIVE AMENDMENT - MAILED"
+  },
+  {
+    "Id": 818,
+    "Indicator": "Live/Pending",
+    "Description": "SU - STATEMENT OF USE ACCEPTED - APPROVED FOR REGISTRATION"
+  },
+  {
+    "Id": 819,
+    "Indicator": "Live/Pending",
+    "Description": "SU - REGISTRATION REVIEW COMPLETE"
+  },
+  {
+    "Id": 820,
+    "Indicator": "Live/Pending",
+    "Description": "SU-EXAMINER'S AMENDMENT/PRIORITY ACTION COUNTED NOT MAILED"
+  },
+  {
+    "Id": 821,
+    "Indicator": "Live/Pending",
+    "Description": "SU - EXAMINER'S AMENDMENT/PRIORITY ACTION MAILED"
+  },
+  {
+    "Id": 822,
+    "Indicator": "Live/Pending",
+    "Description": "SU - PRIORITY ACTION COUNTED NOT MAILED"
+  },
+  {
+    "Id": 823,
+    "Indicator": "Live/Pending",
+    "Description": "SU - PRIORITY ACTION MAILED"
+  },
+  {
+    "Id": 824,
+    "Indicator": "Live/Pending",
+    "Description": "SU - SUBSEQUENT FINAL REFUSAL WRITTEN"
+  },
+  {
+    "Id": 825,
+    "Indicator": "Live/Pending",
+    "Description": "SU - SUBSEQUENT FINAL MAILED"
+  },
+  {
+    "Id": 900,
+    "Indicator": "Dead/Expired",
+    "Description": "EXPIRED"
+  },
+  {
+    "Id": 969,
+    "Indicator": "Live/Pending",
+    "Description": "NON REGISTRATION DATA"
+  },
+  {
+    "Id": 970,
+    "Indicator": "Indifferent",
+    "Description": "RECORD CREATED DUE TO ASSIGNMENT REQUEST"
+  },
+  {
+    "Id": 973,
+    "Indicator": "Live/Pending",
+    "Description": "PENDING PETITION/COURT DECISION"
+  }
+]

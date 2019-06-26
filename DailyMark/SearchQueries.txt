@@ -1,0 +1,6 @@
+﻿#Add search queries to this file like this
+#MyBrand=sometext%
+#MyBrand2=%micro
+# % means 0 or more of any characters; pies% means any text that starts with pies
+# _ (underscore) means any character
+# #(number sign) means comment
