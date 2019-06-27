@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DailyMark", "DailyMark\Dail
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CD053C45-5743-46D5-B190-B8C7E36D0F9E}"
 	ProjectSection(SolutionItems) = preProject
-		DailyMark\LICENSE = DailyMark\LICENSE
+		LICENSE = LICENSE
 		Readme.md = Readme.md
 	EndProjectSection
 EndProject
