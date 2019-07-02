@@ -2,6 +2,8 @@
 ### What?
 DailyMark is an open source (AGPL) cross-platform desktop program which will get the latest trademark application data from the United States Patent and Trademark Office using the official API (application programming interface), run search queries against that data, and then produce a human-readable HTML report about any matches found.
 
+For an online demo of this software vist: https://dailymark.legal/
+
 ### Why?
 If you or your clients have trademark registrations you may want to monitor the USPTO for new applications similar to your registrations. To do that you can hire a company but you may not know how they do it and will not be in control of the process. 
 Daily Mark allows you to handle the entire process in an automated way.

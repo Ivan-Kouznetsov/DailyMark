@@ -73,17 +73,16 @@ namespace DailyMark.DAO
 
                     string statusCodesJson = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + statuscodesFilename);
 
-                    try
-                    {
+                   
                         List<StatusCode> statusCodes = JsonConvert.DeserializeObject<List<StatusCode>>(statusCodesJson);
 
-                        SqliteConnection sqliteConnection = new SqliteConnection("Data Source=" + dbname + ";");
-
                         string createCommand = "CREATE TABLE TrademarkApplications(SerialNumber INTEGER PRIMARY KEY, MarkLiteralElements TEXT, StatusCode INTEGER, FilingDate Date, DateAdded DATE);" +
-                                               "CREATE TABLE StatusCodes (Id INTEGER PRIMARY KEY, Indicator varchar(225), Description varchar(225)); ";
+                                            "CREATE TABLE StatusCodes (Id INTEGER PRIMARY KEY, Indicator varchar(225), Description varchar(225)); ";
 
-                        
+
+                        SqliteConnection sqliteConnection = new SqliteConnection("Data Source=" + dbname + ";"); 
                         SqliteCommand sqlitCreateCommand = new SqliteCommand(createCommand, sqliteConnection);
+                        try{
 
                         sqliteConnection.Open();
                         sqlitCreateCommand.ExecuteNonQuery();
@@ -111,6 +110,7 @@ namespace DailyMark.DAO
                     }
                     catch
                     {
+                        sqliteConnection.Close();
                         return false;
                     }
                 }
@@ -123,26 +123,34 @@ namespace DailyMark.DAO
         }
 
         public static bool ValidateDatabase() {
-           
-                SqliteConnection sqliteConnection = new SqliteConnection("Data Source=" + dbname + ";");
-                SqliteCommand sqliteCommand = new SqliteCommand("pragma integrity_check;", sqliteConnection);
-                string result = String.Empty;
-            try
-            {
-                sqliteConnection.Open();
-                SqliteDataReader reader = sqliteCommand.ExecuteReader();
-                while (reader.Read())
-                {
-                    result = (string)reader["integrity_check"];
-                }
-                sqliteConnection.Close();
+            string result = String.Empty;
 
-                return result == "ok";
+            using (SqliteConnection sqliteConnection = new SqliteConnection("Data Source=" + dbname + ";"))
+            using (SqliteCommand sqliteCommand = new SqliteCommand("pragma integrity_check;", sqliteConnection))
+            {
+                
+                try
+                {
+                    sqliteConnection.Open();
+                    SqliteDataReader reader = sqliteCommand.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        result = (string)reader["integrity_check"];
+                    }
+                    sqliteConnection.Close();
+
+                    
+                }
+                catch
+                {
+
+                    sqliteConnection.Close();
+                    sqliteConnection.Dispose();
+                    return false;
+                }
             }
-            catch {
-                sqliteConnection.Close();
-                return false;
-            }
+
+            return result == "ok";
         }
 
         public static List<int> GetNewApplicationStatusCodes()
@@ -166,70 +174,77 @@ namespace DailyMark.DAO
 
         public static DateTime GetEarliestDate()
         {
-            SqliteConnection sqliteConnection = new SqliteConnection("Data Source=" + dbname + ";");
-            SqliteCommand sqliteCommand = new SqliteCommand("SELECT FilingDate from TrademarkApplications ORDER BY FilingDate ASC LIMIT 1;", sqliteConnection);
             DateTime result = new DateTime();
 
-            sqliteConnection.Open();
-            SqliteDataReader reader = sqliteCommand.ExecuteReader();
-            while (reader.Read())
+            using (SqliteConnection sqliteConnection = new SqliteConnection("Data Source=" + dbname + ";"))
             {
-                result = DateTime.Parse((string)reader["FilingDate"]);
-            }
-            sqliteConnection.Close();
+                sqliteConnection.Open();
+                using (SqliteCommand sqliteCommand = new SqliteCommand("SELECT FilingDate from TrademarkApplications ORDER BY FilingDate ASC LIMIT 1;", sqliteConnection))
+                using (SqliteDataReader reader = sqliteCommand.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        result = DateTime.Parse((string)reader["FilingDate"]);
+                    }
 
+                }
+            }
             return result;
         }
 
 
         public static void SaveList(List<TrademarkApplication> list)
         {
-            SqliteConnection sqliteConnection = new SqliteConnection("Data Source=" + dbname + ";");
-            sqliteConnection.Open();
-            using (SqliteCommand sqliteCommand = new SqliteCommand("INSERT OR REPLACE INTO TrademarkApplications (SerialNumber, MarkLiteralElements, StatusCode, FilingDate, DateAdded) VALUES (@SerialNumber, @MarkLiteralElements, @StatusCode, @FilingDate, @DateAdded)", sqliteConnection))
-            using (var t = sqliteConnection.BeginTransaction())
+            using (SqliteConnection sqliteConnection = new SqliteConnection("Data Source=" + dbname + ";"))
             {
-                sqliteCommand.Transaction = t;
-                foreach (TrademarkApplication tm in list)
+                sqliteConnection.Open();
+                using (SqliteCommand sqliteCommand = new SqliteCommand("INSERT OR REPLACE INTO TrademarkApplications (SerialNumber, MarkLiteralElements, StatusCode, FilingDate, DateAdded) VALUES (@SerialNumber, @MarkLiteralElements, @StatusCode, @FilingDate, @DateAdded)", sqliteConnection))
+                using (var t = sqliteConnection.BeginTransaction())
                 {
-                    if (tm.MarkLiteralElements != null)
+                    sqliteCommand.Transaction = t;
+                    foreach (TrademarkApplication tm in list)
                     {
-                        sqliteCommand.Parameters.Clear();
-                        sqliteCommand.Parameters.AddWithValue("@SerialNumber", tm.SerialNumber);
-                        sqliteCommand.Parameters.AddWithValue("@MarkLiteralElements", tm.MarkLiteralElements);
-                        sqliteCommand.Parameters.AddWithValue("@StatusCode", tm.StatusCode.Id);
-                        sqliteCommand.Parameters.AddWithValue("@FilingDate", tm.FilingDate.Date);
-                        sqliteCommand.Parameters.AddWithValue("@DateAdded", tm.DateAdded.Date);
-                        sqliteCommand.ExecuteNonQuery();
+                        if (tm.MarkLiteralElements != null)
+                        {
+                            sqliteCommand.Parameters.Clear();
+                            sqliteCommand.Parameters.AddWithValue("@SerialNumber", tm.SerialNumber);
+                            sqliteCommand.Parameters.AddWithValue("@MarkLiteralElements", tm.MarkLiteralElements);
+                            sqliteCommand.Parameters.AddWithValue("@StatusCode", tm.StatusCode.Id);
+                            sqliteCommand.Parameters.AddWithValue("@FilingDate", tm.FilingDate.Date);
+                            sqliteCommand.Parameters.AddWithValue("@DateAdded", tm.DateAdded.Date);
+                            sqliteCommand.ExecuteNonQuery();
+                        }
                     }
+
+                    t.Commit();
                 }
 
-                t.Commit();
             }
-
-            sqliteConnection.Close();
+            
         }
 
 
         public static SearchResult Search(string queryName, string searchPattern, DateTime from)
         {
-            SqliteConnection sqliteConnection = new SqliteConnection("Data Source=" + dbname + ";");
-            SqliteCommand sqliteCommand = new SqliteCommand("SELECT SerialNumber, MarkLiteralElements, FilingDate, DateAdded, StatusCode, Indicator, Description from TrademarkApplications JOIN StatusCodes on TrademarkApplications.StatusCode = StatusCodes.Id WHERE MarkLiteralElements LIKE @searchPattern AND FilingDate >= @from;", sqliteConnection);
-
-            sqliteCommand.Parameters.AddWithValue("@searchPattern", searchPattern);
-            sqliteCommand.Parameters.AddWithValue("@from", from);
-         
             List<TrademarkApplication> results = new List<TrademarkApplication>();
 
-            sqliteConnection.Open();
-            SqliteDataReader reader = sqliteCommand.ExecuteReader();
-            while (reader.Read())
+            using (SqliteConnection sqliteConnection = new SqliteConnection("Data Source=" + dbname + ";"))
+            using (SqliteCommand sqliteCommand = new SqliteCommand("SELECT SerialNumber, MarkLiteralElements, FilingDate, DateAdded, StatusCode, Indicator, Description from TrademarkApplications JOIN StatusCodes on TrademarkApplications.StatusCode = StatusCodes.Id WHERE MarkLiteralElements LIKE @searchPattern AND FilingDate >= @from;", sqliteConnection))
             {
-                results.Add(new TrademarkApplication(DateTime.Parse((string)reader["FilingDate"]), DateTime.Parse((string)reader["DateAdded"]), Convert.ToInt32(reader["SerialNumber"]), (string)reader["MarkLiteralElements"], new StatusCode(Convert.ToInt32(reader["StatusCode"]),(string)reader["Indicator"],(string)reader["Description"])));
 
+                sqliteCommand.Parameters.AddWithValue("@searchPattern", searchPattern);
+                sqliteCommand.Parameters.AddWithValue("@from", from);
+                sqliteConnection.Open();
+               
+
+                SqliteDataReader reader = sqliteCommand.ExecuteReader();
+                while (reader.Read())
+                {
+                    results.Add(new TrademarkApplication(DateTime.Parse((string)reader["FilingDate"]), DateTime.Parse((string)reader["DateAdded"]), Convert.ToInt32(reader["SerialNumber"]), (string)reader["MarkLiteralElements"], new StatusCode(Convert.ToInt32(reader["StatusCode"]), (string)reader["Indicator"], (string)reader["Description"])));
+
+                }
             }
-            sqliteConnection.Close();
-
+            
 
             return new SearchResult(queryName, searchPattern,from, DateTime.Now, results);
         }
