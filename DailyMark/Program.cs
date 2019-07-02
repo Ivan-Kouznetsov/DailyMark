@@ -181,7 +181,9 @@ namespace DailyMark
             Console.WriteLine();
             Console.WriteLine();
 
-            List<int> newAppStatusCodeIds = LocalDAO.GetNewApplicationStatusCodes();
+            List<int> statusCodeIdsNew = LocalDAO.GetNewApplicationStatusCodes();
+            List<int> statusCodeIdsDead = LocalDAO.GetDeadApplicationStatusCodes();
+
 
             if (UserInputDAO.TryGetQueries(queriesFilename, out Dictionary<string, string> queries, out string errorMessage))
             {
@@ -226,8 +228,8 @@ namespace DailyMark
                         foreach (DateTime day in EachDay(latestDate, yesterday))
                         {
                             WriteTimeStampedLine("Getting USPTO applications from " + day.ToString("MMM dd, yyyy"));
-                            List<TrademarkApplication> trademarkApplications = UsptoDAO.GetDailyTrademarkApplications(day, newAppStatusCodeIds, settings.EarliestFilingDate, settings.DownloadAttempts);
-                            LocalDAO.SaveList(trademarkApplications);
+                            var trademarkApplications = UsptoDAO.GetDailyTrademarkApplications(day, LocalDAO.StatusCodes, settings.EarliestFilingDate, settings.DownloadAttempts);
+                            LocalDAO.SaveApplications(trademarkApplications.newApps, trademarkApplications.deadApps);
                             settings.LastDownloadDate = day;
                             LocalDAO.SaveSettings(settings);
                         }

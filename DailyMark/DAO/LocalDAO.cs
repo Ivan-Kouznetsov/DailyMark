@@ -16,6 +16,16 @@ namespace DailyMark.DAO
         private const string settingsFileName = "Settings.json";
 
         static readonly Settings defaultSettings = new Settings(AppDomain.CurrentDomain.BaseDirectory + "Reports",  DateTime.Now.AddDays(-1), DateTime.Now.AddDays(-10), DateTime.MinValue, ReportFormat.Html, 5);
+        public static List<StatusCode> StatusCodes { get; private set; }
+
+        static LocalDAO() {
+            JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings
+            {
+                MissingMemberHandling = MissingMemberHandling.Error
+            };
+
+            StatusCodes = JsonConvert.DeserializeObject<List<StatusCode>>(File.ReadAllText(statuscodesFilename), jsonSerializerSettings);
+        }
 
         private static Settings CreateSettingsFile()
         {
@@ -155,16 +165,25 @@ namespace DailyMark.DAO
 
         public static List<int> GetNewApplicationStatusCodes()
         {
-            JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings
-            {
-                MissingMemberHandling = MissingMemberHandling.Error
-            };
-
-            List<StatusCode> statusCodes = JsonConvert.DeserializeObject<List<StatusCode>>(File.ReadAllText(statuscodesFilename), jsonSerializerSettings);
-            List<StatusCode> newAppStatusCodes = statusCodes.FindAll(c => c.IsNewApplication);
+            
+            List<StatusCode> newAppStatusCodes = StatusCodes.FindAll(c => c.IsNewApplication);
             List<int> result = new List<int>();
 
             foreach (StatusCode s in newAppStatusCodes)
+            {
+                result.Add(s.Id);
+            }
+
+            return result;
+        }
+
+        public static List<int> GetDeadApplicationStatusCodes()
+        {
+
+            List<StatusCode> deadAppStatusCodes = StatusCodes.FindAll(c => c.IsDead);
+            List<int> result = new List<int>();
+
+            foreach (StatusCode s in deadAppStatusCodes)
             {
                 result.Add(s.Id);
             }
@@ -192,17 +211,25 @@ namespace DailyMark.DAO
             return result;
         }
 
+        private static List<int> GetSerialNumbers(List<TrademarkApplication> applications) {
+            List<int> serialNumbers = new List<int>();
+            foreach (TrademarkApplication tm in applications) {
+                serialNumbers.Add(tm.SerialNumber);
+            }
 
-        public static void SaveList(List<TrademarkApplication> list)
+            return serialNumbers;
+        }
+
+        public static void SaveApplications(List<TrademarkApplication> newApplications, List<TrademarkApplication> deadApplications)
         {
             using (SqliteConnection sqliteConnection = new SqliteConnection("Data Source=" + dbname + ";"))
             {
                 sqliteConnection.Open();
-                using (SqliteCommand sqliteCommand = new SqliteCommand("INSERT OR REPLACE INTO TrademarkApplications (SerialNumber, MarkLiteralElements, StatusCode, FilingDate, DateAdded) VALUES (@SerialNumber, @MarkLiteralElements, @StatusCode, @FilingDate, @DateAdded)", sqliteConnection))
+                using (SqliteCommand sqliteCommand = new SqliteCommand("INSERT OR REPLACE INTO TrademarkApplications (SerialNumber, MarkLiteralElements, StatusCode, FilingDate, DateAdded, CaseFileDate) VALUES (@SerialNumber, @MarkLiteralElements, @StatusCode, @FilingDate, @DateAdded, @CaseFileDate)", sqliteConnection))
                 using (var t = sqliteConnection.BeginTransaction())
                 {
                     sqliteCommand.Transaction = t;
-                    foreach (TrademarkApplication tm in list)
+                    foreach (TrademarkApplication tm in newApplications)
                     {
                         if (tm.MarkLiteralElements != null)
                         {
@@ -212,6 +239,7 @@ namespace DailyMark.DAO
                             sqliteCommand.Parameters.AddWithValue("@StatusCode", tm.StatusCode.Id);
                             sqliteCommand.Parameters.AddWithValue("@FilingDate", tm.FilingDate.Date);
                             sqliteCommand.Parameters.AddWithValue("@DateAdded", tm.DateAdded.Date);
+                            sqliteCommand.Parameters.AddWithValue("@CaseFileDate", tm.CaseFileDate.Date);
                             sqliteCommand.ExecuteNonQuery();
                         }
                     }
@@ -219,8 +247,26 @@ namespace DailyMark.DAO
                     t.Commit();
                 }
 
+                if (deadApplications.Count > 0)
+                {
+                    using (SqliteCommand sqliteCommand = new SqliteCommand("DELETE FROM TrademarkApplications WHERE SerialNumber in (@deletelist)", sqliteConnection))
+                    {
+                        List<int> deadSerialNumbers = GetSerialNumbers(deadApplications);
+                        List<string> deadSerialNumberStrings = new List<string>();
+
+                        foreach (int s in deadSerialNumbers)
+                        {
+                            deadSerialNumberStrings.Add(s.ToString());
+                        }
+
+                        sqliteCommand.Parameters.AddWithValue("@deletelist", String.Join(',', deadSerialNumberStrings));
+                        sqliteCommand.ExecuteNonQuery();
+                    }
+                }
             }
-            
+
+
+
         }
 
 

@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.IO;
 using Newtonsoft.Json;
 using DailyMark.Models;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.IO.Compression;
-using System.Xml.Linq;
-using System.Linq;
-using System.Globalization;
+using DailyMark.Services;
+
 
 namespace DailyMark.DAO
 {
@@ -17,7 +15,7 @@ namespace DailyMark.DAO
     {      
         private static readonly HttpClient httpClient = new HttpClient();
         private const string urlDateFormat = "yyyy-MM-dd";
-        private const string xmlDateFormat = "yyyyMMdd";
+        
 
 
         static UsptoDAO() {
@@ -53,40 +51,7 @@ namespace DailyMark.DAO
             ZipArchive zipArchive = new ZipArchive(s,ZipArchiveMode.Read);
             return zipArchive.Entries[0].Open();
         }
-        private static bool CheckCaseFileStatus(XElement e, List<int> statusCodeIds) {
-            //.Element("status-code")
-            if (e == null) return false;
-            if (e.Element("status-code")==null) return false;
-            int code = (int)e.Element("status-code");
-
-            return statusCodeIds.Contains(code);
-        }
-
-        private static bool IsFilingDateTimely(XElement e, DateTime earliestFilingDate) {
-            if (e == null) return false;
-            if (e.Element("filing-date") == null) return false;
-            DateTime date = DateTime.ParseExact((string)e.Element("filing-date"), xmlDateFormat, CultureInfo.InvariantCulture);
-            return date.Date >= earliestFilingDate.Date;
-        }
-    
-        private static List<TrademarkApplication> ParseXML(Stream s, List<int> statusCodes, DateTime earliestFilingDate) {
-         
-            XElement xElement = XElement.Load(s);
-            IEnumerable<XElement> searchResults = from case_file in xElement.Descendants("case-file")
-                                                  where CheckCaseFileStatus(case_file.Element("case-file-header"), statusCodes) &&
-                                                        IsFilingDateTimely(case_file.Element("case-file-header"), earliestFilingDate)
-                                                  select case_file;
-            
-            List<TrademarkApplication> results = new List<TrademarkApplication>();
-
-            foreach (XElement e in searchResults)
-            {
-               results.Add(new TrademarkApplication(DateTime.ParseExact((string)e.Element("case-file-header").Element("filing-date"), xmlDateFormat, CultureInfo.InvariantCulture), (int)e.Element("serial-number"), (string)e.Element("case-file-header").Element("mark-identification"), (int)e.Element("case-file-header").Element("status-code")));
-            }            
-           
-           
-            return results;
-        }
+      
 
 
         private static MemoryStream TryDownloadDailyFileAsStream(string url, int attempts) {
@@ -107,17 +72,16 @@ namespace DailyMark.DAO
 
         }
 
-        public static List<TrademarkApplication> GetDailyTrademarkApplications(DateTime date, List<int> statusCodeIds, DateTime earliestFilingDate, int attempts) {
+        public static (List<TrademarkApplication> newApps, List<TrademarkApplication> deadApps) GetDailyTrademarkApplications(DateTime date, List<StatusCode> statusCodes, DateTime earliestFilingDate, int attempts) {
             var urlDownloadTask = GetDailyFileUrl(date);
             urlDownloadTask.Wait();
             string url = urlDownloadTask.Result;
 
             MemoryStream stream = TryDownloadDailyFileAsStream(url, attempts);
 
-            List <TrademarkApplication> result = ParseXML(UnzipSingleFileAsStream(stream), statusCodeIds, earliestFilingDate);
+            var result = BdssParser.ParseXML(UnzipSingleFileAsStream(stream), statusCodes, earliestFilingDate);
             stream.Dispose();
             return result;
-
         }
     }
 }
