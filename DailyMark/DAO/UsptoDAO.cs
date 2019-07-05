@@ -16,12 +16,13 @@ namespace DailyMark.DAO
         private static readonly HttpClient httpClient = new HttpClient();
         private const string urlDateFormat = "yyyy-MM-dd";
         
-
-
-        static UsptoDAO() {
+        static UsptoDAO()
+        {
             httpClient.Timeout = new TimeSpan(0, 30, 0);
         }
-        private static async Task<string> GetDailyFileUrl(DateTime date) {
+
+        private static async Task<string> GetDailyFileUrl(DateTime date)
+        {
             string result = null; ;
 
             string url = @"https://bulkdata.uspto.gov/BDSS-API/products/TRTDXFAP?fromDate=" + date.ToString(urlDateFormat) + "&toDate=" + date.ToString(urlDateFormat);
@@ -37,7 +38,8 @@ namespace DailyMark.DAO
             return result;
         }
 
-        private static async Task<MemoryStream> GetDailyFileAsStream(string url) {
+        private static async Task<MemoryStream> GetDailyFileAsStream(string url)
+        {
             MemoryStream memoryStream = new MemoryStream();
 
             HttpResponseMessage response = await httpClient.GetAsync(url);
@@ -47,14 +49,16 @@ namespace DailyMark.DAO
             return memoryStream;            
         }
 
-        private static Stream UnzipSingleFileAsStream(MemoryStream s) {
+        private static Stream UnzipSingleFileAsStream(MemoryStream s)
+        {
             ZipArchive zipArchive = new ZipArchive(s,ZipArchiveMode.Read);
             return zipArchive.Entries[0].Open();
         }
       
 
 
-        private static MemoryStream TryDownloadDailyFileAsStream(string url, int attempts) {
+        private static MemoryStream TryDownloadDailyFileAsStream(string url, int attempts)
+        {
             if (attempts == 0) throw new TimeoutException("Download failed, make sure you're connected to the internet and that the USPTO's servers are not down for maintenance and try again.");
             try
             {
@@ -69,10 +73,10 @@ namespace DailyMark.DAO
                
                 return TryDownloadDailyFileAsStream(url, attempts - 1);
             }
-
         }
 
-        public static (List<TrademarkApplication> newApps, List<TrademarkApplication> deadApps) GetDailyTrademarkApplications(DateTime date, List<StatusCode> statusCodes, DateTime earliestFilingDate, int attempts) {
+        public static (List<TrademarkApplication> newApps, List<TrademarkApplication> deadApps) GetDailyTrademarkApplications(DateTime date, List<StatusCode> statusCodes, DateTime earliestFilingDate, int attempts)
+        {
             var urlDownloadTask = GetDailyFileUrl(date);
             urlDownloadTask.Wait();
             string url = urlDownloadTask.Result;

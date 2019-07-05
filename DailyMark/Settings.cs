@@ -17,7 +17,10 @@ namespace DailyMark
         public DateTime EarliestFilingDate { get; set; }
         public ReportFormat ReportFormat { get; private set; }
         public int DownloadAttempts { get; private set; }
-    public Settings(string reportsDirectory,  DateTime lastSuccessfulReportDate, DateTime lastDownloadDate, DateTime earliestFilingDate, ReportFormat reportFormat, int downloadAttempts) {
+
+        public Settings(string reportsDirectory,  DateTime lastSuccessfulReportDate, DateTime lastDownloadDate,
+                        DateTime earliestFilingDate, ReportFormat reportFormat, int downloadAttempts)
+        {
             ReportsDirectory = reportsDirectory;
             LastSuccessfulReportDate = lastSuccessfulReportDate;
             LastDownloadDate = lastDownloadDate;

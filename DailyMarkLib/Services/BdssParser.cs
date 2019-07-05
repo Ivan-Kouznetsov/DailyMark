@@ -57,7 +57,11 @@ namespace DailyMark.Services
 
             foreach (XElement e in searchResults)
             {               
-                TrademarkApplication app =  new TrademarkApplication(DateTime.ParseExact((string)e.Element("case-file-header").Element("filing-date"), xmlDateFormat, CultureInfo.InvariantCulture), dateTimeOfFile, (int)e.Element("serial-number"), (string)e.Element("case-file-header").Element("mark-identification"), statusCodes.Find(status => status.Id== (int)e.Element("case-file-header").Element("status-code")));
+                TrademarkApplication app =  new TrademarkApplication(DateTime.ParseExact((string)e.Element("case-file-header").Element("filing-date"), xmlDateFormat, CultureInfo.InvariantCulture),
+                                                                     dateTimeOfFile,
+                                                                     (int)e.Element("serial-number"),
+                                                                     (string)e.Element("case-file-header").Element("mark-identification"),
+                                                                     statusCodes.Find(status => status.Id== (int)e.Element("case-file-header").Element("status-code")));
                 if (app.StatusCode.IsDead) {
                     deadApplications.Add(app);
                 } else if (app.StatusCode.IsNewApplication) {

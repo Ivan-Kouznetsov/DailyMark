@@ -18,7 +18,8 @@ namespace DailyMark.DAO
         static readonly Settings defaultSettings = new Settings(AppDomain.CurrentDomain.BaseDirectory + "Reports",  DateTime.Now.AddDays(-1), DateTime.Now.AddDays(-10), DateTime.MinValue, ReportFormat.Html, 5);
         public static List<StatusCode> StatusCodes { get; private set; }
 
-        static LocalDAO() {
+        static LocalDAO()
+        {
             JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings
             {
                 MissingMemberHandling = MissingMemberHandling.Error
@@ -61,7 +62,8 @@ namespace DailyMark.DAO
 
         public static void DeleteDatabase()
         {
-            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + Path.DirectorySeparatorChar + dbname)) {
+            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + Path.DirectorySeparatorChar + dbname))
+            {
                 try
                 {
                     File.Delete(AppDomain.CurrentDomain.BaseDirectory + Path.DirectorySeparatorChar + dbname);
@@ -132,7 +134,8 @@ namespace DailyMark.DAO
             return true;
         }
 
-        public static bool ValidateDatabase() {
+        public static bool ValidateDatabase()
+        {
             string result = String.Empty;
 
             using (SqliteConnection sqliteConnection = new SqliteConnection("Data Source=" + dbname + ";"))
@@ -179,7 +182,6 @@ namespace DailyMark.DAO
 
         public static List<int> GetDeadApplicationStatusCodes()
         {
-
             List<StatusCode> deadAppStatusCodes = StatusCodes.FindAll(c => c.IsDead);
             List<int> result = new List<int>();
 
@@ -211,9 +213,11 @@ namespace DailyMark.DAO
             return result;
         }
 
-        private static List<int> GetSerialNumbers(List<TrademarkApplication> applications) {
+        private static List<int> GetSerialNumbers(List<TrademarkApplication> applications)
+        {
             List<int> serialNumbers = new List<int>();
-            foreach (TrademarkApplication tm in applications) {
+            foreach (TrademarkApplication tm in applications)
+            {
                 serialNumbers.Add(tm.SerialNumber);
             }
 
@@ -264,11 +268,7 @@ namespace DailyMark.DAO
                     }
                 }
             }
-
-
-
         }
-
 
         public static SearchResult Search(string queryName, string searchPattern, DateTime from)
         {
@@ -277,23 +277,24 @@ namespace DailyMark.DAO
             using (SqliteConnection sqliteConnection = new SqliteConnection("Data Source=" + dbname + ";"))
             using (SqliteCommand sqliteCommand = new SqliteCommand("SELECT SerialNumber, MarkLiteralElements, FilingDate, DateAdded, StatusCode, Indicator, Description from TrademarkApplications JOIN StatusCodes on TrademarkApplications.StatusCode = StatusCodes.Id WHERE MarkLiteralElements LIKE @searchPattern AND FilingDate >= @from;", sqliteConnection))
             {
-
                 sqliteCommand.Parameters.AddWithValue("@searchPattern", searchPattern);
                 sqliteCommand.Parameters.AddWithValue("@from", from);
-                sqliteConnection.Open();
-               
+                sqliteConnection.Open();               
 
                 SqliteDataReader reader = sqliteCommand.ExecuteReader();
                 while (reader.Read())
                 {
-                    results.Add(new TrademarkApplication(DateTime.Parse((string)reader["FilingDate"]), DateTime.Parse((string)reader["DateAdded"]), Convert.ToInt32(reader["SerialNumber"]), (string)reader["MarkLiteralElements"], new StatusCode(Convert.ToInt32(reader["StatusCode"]), (string)reader["Indicator"], (string)reader["Description"])));
-
+                    results.Add(new TrademarkApplication(DateTime.Parse((string)reader["FilingDate"]),
+                        DateTime.Parse((string)reader["DateAdded"]),
+                        Convert.ToInt32(reader["SerialNumber"]),
+                        (string)reader["MarkLiteralElements"],
+                        new StatusCode(Convert.ToInt32(reader["StatusCode"]),
+                        (string)reader["Indicator"], 
+                        (string)reader["Description"])));
                 }
-            }
-            
+            }            
 
             return new SearchResult(queryName, searchPattern,from, DateTime.Now, results);
         }
-
     }
 }

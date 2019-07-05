@@ -13,7 +13,8 @@ namespace DailyMark.DAO
         public DateTime To { get; private set; }
         public List<TrademarkApplication> TrademarkApplications { get; private set; }
 
-        public SearchResult(string name, string searchPattern, DateTime from, DateTime to, List<TrademarkApplication> trademarkApplications) {
+        public SearchResult(string name, string searchPattern, DateTime from, DateTime to, List<TrademarkApplication> trademarkApplications)
+        {
             Name = name;
             SearchPattern = searchPattern;
             From = from;

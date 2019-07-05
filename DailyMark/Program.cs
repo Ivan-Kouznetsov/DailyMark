@@ -31,11 +31,13 @@ namespace DailyMark
                 yield return day;
         }
 
-        static void WriteTimeStampedLine(string s) {
+        static void WriteTimeStampedLine(string s)
+        {
             Console.WriteLine(DateTime.Now.ToShortTimeString() + " " + s);
         }
 
-        static string RunReport(Dictionary<string, string> queries, Settings settings, DateTime startDate) {
+        static string RunReport(Dictionary<string, string> queries, Settings settings, DateTime startDate)
+        {
             string result = string.Empty;
             
             List<SearchResult> searchResults = new List<SearchResult>();
@@ -60,7 +62,8 @@ namespace DailyMark
 
         
 
-        static bool PromptYesNo(string prompt) {
+        static bool PromptYesNo(string prompt)
+        {
             char c = '\0';
             char[] yesno = new char[] {'y','n'}; 
             do
@@ -100,7 +103,8 @@ namespace DailyMark
             return input;
         }
 
-        static void PressAnyKey() {
+        static void PressAnyKey()
+        {
             Console.WriteLine("Press any key to exit...");
             Console.ReadKey();
         }
@@ -129,7 +133,8 @@ namespace DailyMark
             return input;
         }
 
-        static DateTime PromptPastDate(string prompt, DateTime earliestDate) {
+        static DateTime PromptPastDate(string prompt, DateTime earliestDate)
+        {
             DateTime dt = PromptPastDate(prompt);
             if (dt < earliestDate)
             {
@@ -161,7 +166,6 @@ namespace DailyMark
 
         static void Main(string[] args)
         {
-
             DateTime? searchDate = null;
 
             bool downloadOnly = false;
@@ -184,17 +188,14 @@ namespace DailyMark
             List<int> statusCodeIdsNew = LocalDAO.GetNewApplicationStatusCodes();
             List<int> statusCodeIdsDead = LocalDAO.GetDeadApplicationStatusCodes();
 
-
             if (UserInputDAO.TryGetQueries(queriesFilename, out Dictionary<string, string> queries, out string errorMessage))
             {
-
                 Console.WriteLine("There are " + queries.Count.ToString() + " queries in " + queriesFilename);
 
                 Settings settings = LocalDAO.GetSettings();
 
                 if (LocalDAO.CreateDatabaseIfNeeded())
                 {
-
                     if (!LocalDAO.ValidateDatabase()) {
                         Console.WriteLine("Local trademark application database is corrupted");
                         Console.WriteLine("Deleting and re-creating database");
@@ -213,9 +214,7 @@ namespace DailyMark
                         settings.LastSuccessfulReportDate = settings.EarliestFilingDate;
                         LocalDAO.SaveSettings(settings);
                         latestDate = settings.EarliestFilingDate;
-                    }
-                   
-
+                    }                   
                         
                     DateTime yesterday = DateTime.Now.AddDays(-1).Date;
 
@@ -238,8 +237,7 @@ namespace DailyMark
                     if (!downloadOnly)
                     {
                         Console.WriteLine();
-                        //run report
-                        
+                        //run report                        
                        
                         Console.WriteLine("Earliest Filings Downloaded: " + settings.EarliestFilingDate.ToString(dateFormat));
                         Console.WriteLine("Latest Filings Downloaded: " + settings.LastDownloadDate.ToString(dateFormat));
@@ -260,9 +258,7 @@ namespace DailyMark
             else {
                 Console.WriteLine("ERROR: " + queriesFilename + " " + errorMessage);
                 PressAnyKey();
-            }
-
-         
+            }         
         }
     }
 }

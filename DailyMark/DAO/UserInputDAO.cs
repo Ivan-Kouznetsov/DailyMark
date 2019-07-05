@@ -12,7 +12,8 @@ namespace DailyMark.DAO
             queries = new Dictionary<string, string>();
 
 
-            for (int i = 0; i < lines.Length; i++) { 
+            for (int i = 0; i < lines.Length; i++)
+            { 
                 if (!lines[i].StartsWith("#"))
                 {
                     string[] split = lines[i].Split('=');
@@ -37,7 +38,6 @@ namespace DailyMark.DAO
             }
 
             errorMessage = null;
-
             return true;
         }
               
@@ -53,8 +53,7 @@ namespace DailyMark.DAO
             if (fileExists)
             {
                 parsed = TrySimpleIniParse(File.ReadAllLines(queriesFilename), out queries, out errorMessage);
-            }
-            
+            }            
             
             return fileExists && parsed;
         }

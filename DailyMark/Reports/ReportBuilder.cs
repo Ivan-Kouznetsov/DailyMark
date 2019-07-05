@@ -11,7 +11,8 @@ namespace DailyMark.Reports
     public static class ReportBuilder
     {
      
-        private static string CreateReportName(ReportFormat reportFormat) {
+        private static string CreateReportName(ReportFormat reportFormat)
+        {
             const string name = "DailyMarkReport_";
             string extention = "";
 
@@ -25,14 +26,16 @@ namespace DailyMark.Reports
             return name + DateTime.Now.ToString("MMM_dd_yyyy_HH_mm_ss") + extention;
         }
 
-        private static string SaveReportAsJson(Settings settings, List<SearchResult> searchResults) {
+        private static string SaveReportAsJson(Settings settings, List<SearchResult> searchResults)
+        {
             string json = JsonConvert.SerializeObject(searchResults);
             string filename = CreateReportName(settings.ReportFormat);
             File.WriteAllText(settings.ReportsDirectory + filename, json);
             return filename;
         }
                
-        private static string HtmlTableRow(TrademarkApplication t) {
+        private static string HtmlTableRow(TrademarkApplication t)
+        {
             return String.Format(@"<tr><td><a href=""http://tsdr.uspto.gov/#caseNumber={0}&caseSearchType=US_APPLICATION&caseType=SERIAL_NO&searchType=statusSearch"">{0}</a></td><td>{1}</td><td>{2}</td></tr>", t.SerialNumber, t.FilingDate.ToString("MMM dd, yyyy"),t.MarkLiteralElements);
         }
 
@@ -44,9 +47,9 @@ namespace DailyMark.Reports
 
             stringBuilder.AppendFormat(@"<!doctype html><html lang=en><head><meta charset=utf-8><title>{0}</title><link href=""style.css"" rel=""stylesheet"" type=""text/css"" media=""all""></head><body><h1>{0}</h1>", title);
 
-            foreach (SearchResult s in searchResults) {
-                
-                    stringBuilder.AppendFormat("<h2>Query: {0}</h2>", s.Name);
+            foreach (SearchResult s in searchResults)
+            {                
+                stringBuilder.AppendFormat("<h2>Query: {0}</h2>", s.Name);
                 if (s.TrademarkApplications.Count > 0)
                 {
                     stringBuilder.Append("<table><tr><th>Serial Number</th><th>Filing Date</th><th>Mark Literal Elements</th></tr>");
@@ -58,12 +61,10 @@ namespace DailyMark.Reports
                 }
                 else {
                     stringBuilder.Append("No results for this query.");
-                }
-                
+                }                
             }
 
             stringBuilder.Append("</body></html>");
-
             return stringBuilder.ToString();
         }
 
@@ -78,7 +79,6 @@ namespace DailyMark.Reports
 
         public static string SaveReport(Settings settings, List<SearchResult> searchResults)
         {
-
             if (searchResults.Count > 0)
             {
                 switch (settings.ReportFormat)

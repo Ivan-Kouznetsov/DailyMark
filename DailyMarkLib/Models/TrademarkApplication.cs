@@ -13,7 +13,8 @@ namespace DailyMark.Models
         public string MarkLiteralElements { get; private set; }               
         public StatusCode StatusCode { get; private set; }
 
-        public TrademarkApplication(DateTime filingDate, DateTime caseFileDate, int serialNumber, string markLiteralElements, StatusCode statusCode) {
+        public TrademarkApplication(DateTime filingDate, DateTime caseFileDate, int serialNumber, string markLiteralElements, StatusCode statusCode)
+        {
             FilingDate = filingDate;
             DateAdded = DateTime.Now;
             CaseFileDate = caseFileDate;
